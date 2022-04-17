@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Müşteri Sayfasına Hoşgeldiniz</h3>
+<br /><br />
+@using (Html.BeginForm("MusteriListele", "Musteri", FormMethod.Get))
+{
+    <p>
+      Tc Kimlik Numaranızı Giriniz
+        <br /><br />
+        @Html.TextBox("p", null, new { @maxLength = "11", @class="form-control", @type = "number", @required = "required" })
+
+        <br />
+        <input type="submit" value="Ara" class="btn btn-primary" />
+    </p>
+}

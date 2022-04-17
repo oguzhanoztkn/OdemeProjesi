@@ -1,0 +1,28 @@
+﻿@model OdemeProjesi.Models.tblAbone
+@{
+    ViewBag.Title = "AboneEkle";
+}
+
+<h2>Abone Ekle</h2>
+
+@using (Html.BeginForm("AboneEkle", "Personel", FormMethod.Post))
+{
+    <div class="form-group">
+
+        @Html.Label("Abone Tc Kimlik No:")
+        @Html.TextBoxFor(x => x.TCNo, new { @class = "form-control", @maxLength = 11 })
+        @Html.ValidationMessageFor(x => x.TCNo)
+        <br><br>
+        @Html.Label("Abone Adı")
+        @Html.TextBoxFor(x => x.AboneAdi, new { @class = "form-control"})
+        @Html.ValidationMessageFor(x => x.AboneAdi)
+        <br><br>
+        @Html.Label("Abone Soyadı")
+        @Html.TextBoxFor(x => x.AboneSoyadi, new { @class = "form-control"})
+        @Html.ValidationMessageFor(x => x.AboneSoyadi)
+
+        @ViewBag.TekrarKayit
+        <br><br>
+        <button class="btn btn-success">Kaydet</button>
+    </div>
+}

@@ -1,0 +1,53 @@
+﻿@*@model IEnumerable<OdemeProjesi.Models.tblFatura>
+@{
+    ViewBag.Title = "FaturaOde";
+}
+@{ string color = "";
+    string colorStatus = "";
+    string statusValue = "";
+    string git = "";
+    string inputType = "";
+}
+<h2>FaturaOde</h2>
+
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>abone ID</th>
+            <th>abone ad</th>
+            <th>abone soyad</th>
+            <th>abone depozito</th>
+            <th>abone durum</th>
+            <th>fatura id</th>
+            <th>FaturaTutar</th>
+            <th>FaturaDurum</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>@item.AboneId</td>
+                <td>@item.tblAbone.AboneAdi</td>
+                <td>@item.tblAbone.AboneSoyadi</td>
+                <td>@item.tblAbone.DepozitoTutari</td>
+                <td>@item.tblAbone.AboneDurum</td>
+
+                <td>@item.FaturaId</td>
+                <td>@item.FaturaTutar</td>
+                @if (item.FaturaDurum == true)
+                {
+                    <td><button class="btn btn-success" disabled>ÖDENDİ</button></td>
+                }
+                else
+                {
+                    <td><a class="btn btn-danger" href="/Personel/FaturaOdeme/@item.FaturaId" disabled>ÖDE</a></td>
+
+
+                }
+                <td><@inputType class="@color @statusValue" href="/Personel/FaturaOdeme/@item.FaturaId" @git>@colorStatus</@inputType></td>
+            </tr>
+        }
+</table>*@

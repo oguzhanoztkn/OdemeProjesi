@@ -1,0 +1,66 @@
+﻿@model IEnumerable<OdemeProjesi.Models.tblAbone>
+@{
+    ViewBag.Title = "Abone Listele";
+}
+@{
+    string aboneDurum = "";
+    string aboneDurumColor = "";
+}
+<h2>Listele</h2>
+<h5>@TempData["mesaj"]</h5>
+@using (Html.BeginForm("AboneListele", "Personel", FormMethod.Post))
+{
+    <p>
+        Aranacak müşteri Tc Kimlik No: @Html.TextBox("p", null, new { @maxlength = 11, @type = "number" })
+        <input type="submit" value="Ara" class="btn btn-primary" />
+    </p>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>TC NO</th>
+            <th>Adı Soyadı</th>
+            <th>Depozito</th>
+            <th>Faturalar</th>
+            <th>Abonelik Durumu </th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            if (item.AboneDurum == true)
+            {
+                aboneDurum = "AKTİF";
+                aboneDurumColor = "text-success";
+            }
+            else
+            {
+                aboneDurum = "PASİF";
+                aboneDurumColor = "text-danger";
+
+            }
+
+            <tr>
+                <td>@item.TCNo</td>
+                <td>@item.AboneAdi @item.AboneSoyadi</td>
+                <td>@item.DepozitoTutari</td>
+                <td><a href="/Personel/AboneFaturaGetir/@item.AboneId" class="btn btn-success">Faturalar</a></td>
+                @if (item.AboneDurum == true)
+                {
+                    <td>
+                        <span class="@aboneDurumColor">@aboneDurum</span>
+                        <a href="/Personel/AbonelikİptalEt/@item.AboneId" class="btn btn-danger">İptal Et</a>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span class="@aboneDurumColor">@aboneDurum</span>
+                        <button class="btn btn-warning" disabled>Pasif</button>
+                    </td>
+                }
+                <td></td>
+            </tr>
+        }
+</table>

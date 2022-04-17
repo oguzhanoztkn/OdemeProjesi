@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "FaturaOdemeSayfasi";
+}
+
+<h2>FaturaOdemeSayfasi</h2>
+
+@using (Html.BeginForm("FaturaOdemeSayfasi", "Personel", FormMethod.Get))
+{
+    <p>
+        Fatura Numarası Giriniz (FaturaId) :
+        <br /><br />
+        @Html.TextBox("p", null, new { @maxLength = "11", @class = "form-control", @required = "required", @type = "number" })
+        <br />
+        <input type="submit" value="Ara" class="btn btn-primary" />
+    </p>
+}

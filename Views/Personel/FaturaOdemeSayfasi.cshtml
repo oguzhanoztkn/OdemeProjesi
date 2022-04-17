@@ -1,0 +1,37 @@
+﻿@model IEnumerable<OdemeProjesi.Models.MultipleClass>
+
+@{
+    ViewBag.Title = "FaturaOdemeSayfasi";
+}
+
+<h2>Fatura Odeme Sayfasi</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>TC NO</th>
+            <th>Adı Soyadı</th>
+            <th>Fatura Durum</th>
+            <th>Fatura Öde </th>
+
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><span>@item.fatura.FaturaId</span></td>
+                <td>@item.abone.TCNo</td>
+
+                <td><span>@item.abone.AboneAdi @item.abone.AboneSoyadi</span></td>
+                <td><span>@item.fatura.FaturaTutar</span></td>
+                @if (item.fatura.FaturaDurum == true)
+                {
+                    <td><h5><button class="btn btn-success" disabled>ÖDENDİ</button></h5></td>
+                }
+                else
+                {
+                    <td><a href="/Personel/FaturaOdemeSayfasiOdendi/@item.fatura.FaturaId" class="btn btn-danger">ÖDE</a></td>
+                }
+            </tr>
+        }
+</table>

@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="OdemeProjesiDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tblAbone">
+          <Key>
+            <PropertyRef Name="AboneId" />
+          </Key>
+          <Property Name="AboneId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TCNo" Type="char" MaxLength="11" Nullable="false" />
+          <Property Name="AboneAdi" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AboneSoyadi" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AboneDurum" Type="bit" />
+          <Property Name="DepozitoTutari" Type="decimal" Precision="8" Scale="2" />
+        </EntityType>
+        <EntityType Name="tblFatura">
+          <Key>
+            <PropertyRef Name="FaturaId" />
+          </Key>
+          <Property Name="FaturaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FaturaDurum" Type="bit" Nullable="false" />
+          <Property Name="FaturaTutar" Type="int" Nullable="false" />
+          <Property Name="AboneId" Type="int" Nullable="false" />
+          <Property Name="FaturaTarih" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblFatura_tblAbone">
+          <End Role="tblAbone" Type="Self.tblAbone" Multiplicity="1" />
+          <End Role="tblFatura" Type="Self.tblFatura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAbone">
+              <PropertyRef Name="AboneId" />
+            </Principal>
+            <Dependent Role="tblFatura">
+              <PropertyRef Name="AboneId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OdemeProjesiDBModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAbone" EntityType="Self.tblAbone" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFatura" EntityType="Self.tblFatura" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblFatura_tblAbone" Association="Self.FK_tblFatura_tblAbone">
+            <End Role="tblAbone" EntitySet="tblAbone" />
+            <End Role="tblFatura" EntitySet="tblFatura" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OdemeProjesiDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tblAbone">
+          <Key>
+            <PropertyRef Name="AboneId" />
+          </Key>
+          <Property Name="AboneId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TCNo" Type="String" MaxLength="11" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="AboneAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AboneSoyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AboneDurum" Type="Boolean" DefaultValue="True" />
+          <Property Name="DepozitoTutari" Type="Decimal" Precision="8" Scale="2" DefaultValue="500" />
+          <NavigationProperty Name="tblFatura" Relationship="Self.FK_tblFatura_tblAbone" FromRole="tblAbone" ToRole="tblFatura" />
+        </EntityType>
+        <EntityType Name="tblFatura">
+          <Key>
+            <PropertyRef Name="FaturaId" />
+          </Key>
+          <Property Name="FaturaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FaturaDurum" Type="Boolean" Nullable="false" />
+          <Property Name="FaturaTutar" Type="Int32" Nullable="false" />
+          <Property Name="AboneId" Type="Int32" Nullable="false" />
+          <Property Name="FaturaTarih" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tblAbone" Relationship="Self.FK_tblFatura_tblAbone" FromRole="tblFatura" ToRole="tblAbone" />
+        </EntityType>
+        <Association Name="FK_tblFatura_tblAbone">
+          <End Role="tblAbone" Type="Self.tblAbone" Multiplicity="1" />
+          <End Role="tblFatura" Type="Self.tblFatura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAbone">
+              <PropertyRef Name="AboneId" />
+            </Principal>
+            <Dependent Role="tblFatura">
+              <PropertyRef Name="AboneId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OdemeProjesiDBEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="tblAbone" EntityType="Self.tblAbone" />
+          <EntitySet Name="tblFatura" EntityType="Self.tblFatura" />
+          <AssociationSet Name="FK_tblFatura_tblAbone" Association="Self.FK_tblFatura_tblAbone">
+            <End Role="tblAbone" EntitySet="tblAbone" />
+            <End Role="tblFatura" EntitySet="tblFatura" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OdemeProjesiDBModelStoreContainer" CdmEntityContainer="OdemeProjesiDBEntities2">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="OdemeProjesiDBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAbone">
+            <EntityTypeMapping TypeName="OdemeProjesiDBModel.tblAbone">
+              <MappingFragment StoreEntitySet="tblAbone">
+                <ScalarProperty Name="AboneId" ColumnName="AboneId" />
+                <ScalarProperty Name="TCNo" ColumnName="TCNo" />
+                <ScalarProperty Name="AboneAdi" ColumnName="AboneAdi" />
+                <ScalarProperty Name="AboneSoyadi" ColumnName="AboneSoyadi" />
+                <ScalarProperty Name="AboneDurum" ColumnName="AboneDurum" />
+                <ScalarProperty Name="DepozitoTutari" ColumnName="DepozitoTutari" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFatura">
+            <EntityTypeMapping TypeName="OdemeProjesiDBModel.tblFatura">
+              <MappingFragment StoreEntitySet="tblFatura">
+                <ScalarProperty Name="FaturaId" ColumnName="FaturaId" />
+                <ScalarProperty Name="FaturaDurum" ColumnName="FaturaDurum" />
+                <ScalarProperty Name="FaturaTutar" ColumnName="FaturaTutar" />
+                <ScalarProperty Name="AboneId" ColumnName="AboneId" />
+                <ScalarProperty Name="FaturaTarih" ColumnName="FaturaTarih" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

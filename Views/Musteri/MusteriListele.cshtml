@@ -1,0 +1,39 @@
+﻿@model IEnumerable<OdemeProjesi.Models.MultipleClass>
+@{
+    ViewBag.Title = "Müşteri Listele";
+}
+
+<h2>Müşteriye Ait Faturalar </h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>TC NO</th>
+            <th>Adı Soyadı</th>
+            <th>Fatura Tutarı </th>
+            <th>Fatura Tarihi</th>
+            <th>Fatura Öde</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+           
+    <tr>
+        <td><span>@item.abone.TCNo</span></td>
+        <td>@item.abone.AboneAdi @item.abone.AboneSoyadi</td>
+        <td>@item.fatura.FaturaTutar </td>
+        <td>
+            @(((DateTime)item.fatura.FaturaTarih).ToString("dd-MMM-yyyy"))
+
+        </td>
+
+        @if (item.fatura.FaturaDurum == true)
+        {
+            <td><h5><button class="btn btn-success" disabled>ÖDENDİ</button></h5></td>
+        }
+        else
+        {
+            <td><a href="/Musteri/FaturaOde/@item.fatura.FaturaId" class="btn btn-danger">ÖDE</a></td>
+        }
+    </tr>
+        }
+</table>

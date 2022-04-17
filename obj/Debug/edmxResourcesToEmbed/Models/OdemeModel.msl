@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="OdemeProjesiDBModelStoreContainer" CdmEntityContainer="OdemeProjesiDBEntities">
+    <EntitySetMapping Name="tblAbone">
+      <EntityTypeMapping TypeName="OdemeProjesiDBModel.tblAbone">
+        <MappingFragment StoreEntitySet="tblAbone">
+          <ScalarProperty Name="DepozitoTutari" ColumnName="DepozitoTutari" />
+          <ScalarProperty Name="AboneDurum" ColumnName="AboneDurum" />
+          <ScalarProperty Name="AboneId" ColumnName="AboneId" />
+          <ScalarProperty Name="AboneAdi" ColumnName="AboneAdi" />
+          <ScalarProperty Name="AboneSoyadi" ColumnName="AboneSoyadi" />
+          <ScalarProperty Name="FaturaId" ColumnName="FaturaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblFatura">
+      <EntityTypeMapping TypeName="OdemeProjesiDBModel.tblFatura">
+        <MappingFragment StoreEntitySet="tblFatura">
+          <ScalarProperty Name="FaturaDurum" ColumnName="FaturaDurum" />
+          <ScalarProperty Name="FaturaId" ColumnName="FaturaId" />
+          <ScalarProperty Name="FaturaTutar" ColumnName="FaturaTutar" />
+          <ScalarProperty Name="AboneId" ColumnName="AboneId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

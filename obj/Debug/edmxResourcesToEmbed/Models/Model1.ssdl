@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OdemeProjesiDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="tblAbone">
+    <Key>
+      <PropertyRef Name="AboneId" />
+    </Key>
+    <Property Name="AboneId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TCNo" Type="char" MaxLength="11" Nullable="false" />
+    <Property Name="AboneAdi" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AboneSoyadi" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AboneDurum" Type="bit" />
+    <Property Name="DepozitoTutari" Type="decimal" Precision="8" Scale="2" />
+  </EntityType>
+  <EntityType Name="tblFatura">
+    <Key>
+      <PropertyRef Name="FaturaId" />
+    </Key>
+    <Property Name="FaturaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FaturaDurum" Type="bit" Nullable="false" />
+    <Property Name="FaturaTutar" Type="int" Nullable="false" />
+    <Property Name="AboneId" Type="int" Nullable="false" />
+    <Property Name="FaturaTarih" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_tblFatura_tblAbone">
+    <End Role="tblAbone" Type="Self.tblAbone" Multiplicity="1" />
+    <End Role="tblFatura" Type="Self.tblFatura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblAbone">
+        <PropertyRef Name="AboneId" />
+      </Principal>
+      <Dependent Role="tblFatura">
+        <PropertyRef Name="AboneId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OdemeProjesiDBModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblAbone" EntityType="Self.tblAbone" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblFatura" EntityType="Self.tblFatura" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tblFatura_tblAbone" Association="Self.FK_tblFatura_tblAbone">
+      <End Role="tblAbone" EntitySet="tblAbone" />
+      <End Role="tblFatura" EntitySet="tblFatura" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
